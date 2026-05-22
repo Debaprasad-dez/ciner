@@ -1,0 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void: #050508;
+  --void-2: #0a0a12;
+  --void-3: #10101c;
+  --surface: #14141f;
+  --surface-2: #1c1c2a;
+  --surface-3: #242435;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --text-primary: #f2f0ff;
+  --text-secondary: rgba(242, 240, 255, 0.6);
+  --text-muted: rgba(242, 240, 255, 0.35);
+  --accent-crimson: #e8624a;
+  --accent-violet: #7b5ea7;
+  --accent-gold: #c9954c;
+  --accent-teal: #4ecdc4;
+  --glow-crimson: rgba(232, 98, 74, 0.15);
+  --glow-violet: rgba(123, 94, 167, 0.15);
+  /* primary gradient (buttons, headings) */
+  --grad-from: var(--accent-crimson);
+  --grad-via: var(--accent-violet);
+  --grad-to: var(--accent-teal);
+
+  /* motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur-base: 0.45s;
+  --dur-slow: 0.8s;
+
+  /* elevation */
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+}
+
+/* ============ THEMES ============ */
+/* Aurora — cyan → blue → violet (from reference) DEFAULT */
+[data-theme='aurora'] {
+  --accent-crimson: #38bdf8;
+  --accent-violet: #6366f1;
+  --accent-gold: #22d3ee;
+  --accent-teal: #818cf8;
+  --text-primary: #eef2ff;
+  --glow-crimson: rgba(56, 189, 248, 0.18);
+  --glow-violet: rgba(99, 102, 241, 0.18);
+  --grad-from: #22d3ee;
+  --grad-via: #3b82f6;
+  --grad-to: #8b5cf6;
+}
+
+/* Ember — original warm crimson/violet/gold */
+[data-theme='ember'] {
+  --accent-crimson: #e8624a;
+  --accent-violet: #7b5ea7;
+  --accent-gold: #c9954c;
+  --accent-teal: #4ecdc4;
+  --glow-crimson: rgba(232, 98, 74, 0.15);
+  --glow-violet: rgba(123, 94, 167, 0.15);
+  --grad-from: #e8624a;
+  --grad-via: #b5527e;
+  --grad-to: #7b5ea7;
+}
+
+/* Synthwave — magenta → pink → cyan */
+[data-theme='synthwave'] {
+  --accent-crimson: #ff2e97;
+  --accent-violet: #b026ff;
+  --accent-gold: #ffd166;
+  --accent-teal: #05d9e8;
+  --text-primary: #fdeeff;
+  --glow-crimson: rgba(255, 46, 151, 0.2);
+  --glow-violet: rgba(176, 38, 255, 0.2);
+  --grad-from: #ff2e97;
+  --grad-via: #b026ff;
+  --grad-to: #05d9e8;
+}
+
+/* Verdant — emerald → teal → lime */
+[data-theme='verdant'] {
+  --accent-crimson: #34d399;
+  --accent-violet: #2dd4bf;
+  --accent-gold: #a3e635;
+  --accent-teal: #5eead4;
+  --text-primary: #ecfdf5;
+  --glow-crimson: rgba(52, 211, 153, 0.18);
+  --glow-violet: rgba(45, 212, 191, 0.18);
+  --grad-from: #a3e635;
+  --grad-via: #34d399;
+  --grad-to: #2dd4bf;
+}
+
+/* Solstice — gold → amber → rose */
+[data-theme='solstice'] {
+  --accent-crimson: #fb7185;
+  --accent-violet: #f59e0b;
+  --accent-gold: #fcd34d;
+  --accent-teal: #fda4af;
+  --text-primary: #fff7ed;
+  --glow-crimson: rgba(251, 113, 133, 0.18);
+  --glow-violet: rgba(245, 158, 11, 0.18);
+  --grad-from: #fcd34d;
+  --grad-via: #fb923c;
+  --grad-to: #fb7185;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--accent-crimson);
+  color: var(--void);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--void);
+  color: var(--text-primary);
+  font-family: 'Syne', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Hide native cursor on devices with a fine pointer (desktop) */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-violet);
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(180deg, rgba(28, 28, 42, 0.55), rgba(20, 20, 31, 0.55));
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  .glass-hover {
+    transition: background var(--dur-fast) var(--ease-out-quint),
+      border-color var(--dur-fast) var(--ease-out-quint),
+      box-shadow var(--dur-fast) var(--ease-out-quint),
+      transform var(--dur-fast) var(--ease-out-quint);
+  }
+  .glass-hover:hover {
+    background: linear-gradient(180deg, rgba(36, 36, 53, 0.7), rgba(28, 28, 42, 0.7));
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-lg), 0 0 48px rgba(123, 94, 167, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+
+  /* Small uppercase eyebrow label — used above section titles */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* 1px gradient hairline divider */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+  }
+
+  /* Animated underline link */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-fast) var(--ease-out-quint);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Fluid display heading — Fraunces with soft, high-contrast optical settings */
+.display-fluid {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 144;
+}
+
+/* Cinematic shimmer loader */
+.shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--void-2) 20%,
+    var(--surface-3) 50%,
+    var(--void-2) 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Custom cursor elements */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--text-primary);
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1px solid rgba(242, 240, 255, 0.5);
+  mix-blend-mode: difference;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+}
+.cursor-ring.hovering {
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  background: rgba(242, 240, 255, 0.1);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--grad-from), var(--grad-via), var(--grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Theme-driven gradient fill for buttons etc. */
+.bg-grad {
+  background-image: linear-gradient(120deg, var(--grad-from), var(--grad-via), var(--grad-to));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
