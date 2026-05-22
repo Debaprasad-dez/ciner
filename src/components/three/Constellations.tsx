@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { Billboard, Text, Line } from '@react-three/drei';
 import type { Constellation, GalaxyNode } from '@/utils/galaxy';
 
+const FONT = `${import.meta.env.BASE_URL}Syne-Bold.ttf`;
+
 interface Props {
   constellations: Constellation[];
   nodes: GalaxyNode[];
@@ -38,7 +40,7 @@ export default function Constellations({ constellations, nodes, activeGenre }: P
             })}
             <Billboard position={[c.center[0], c.center[1] + 4.5, c.center[2]]}>
               <Text
-                font="/Syne-Bold.ttf"
+                font={FONT}
                 fontSize={0.9}
                 letterSpacing={0.18}
                 color={c.color}
@@ -52,7 +54,7 @@ export default function Constellations({ constellations, nodes, activeGenre }: P
                 {c.genre.toUpperCase()}
               </Text>
               <Text
-                font="/Syne-Bold.ttf"
+                font={FONT}
                 position={[0, -0.85, 0]}
                 fontSize={0.32}
                 letterSpacing={0.4}

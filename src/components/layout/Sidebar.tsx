@@ -77,7 +77,7 @@ export default function Sidebar() {
       className="fixed left-0 top-0 z-40 hidden h-screen flex-col border-r border-glass bg-void-2/70 py-6 backdrop-blur-glass md:flex"
     >
       <div className="mb-10 flex items-center gap-3 px-5">
-        <img src="/film.svg" alt="CineAI" className="h-9 w-9 shrink-0" />
+        <img src={`${import.meta.env.BASE_URL}film.svg`} alt="CineAI" className="h-9 w-9 shrink-0" />
         {expanded && (
           <motion.span
             initial={{ opacity: 0 }}

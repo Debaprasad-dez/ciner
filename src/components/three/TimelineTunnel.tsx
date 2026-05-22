@@ -7,6 +7,7 @@ import { posterUrl } from '@/services/tmdb';
 
 const SPACING = 30; // z per decade
 const RADIUS = 8;
+const FONT = `${import.meta.env.BASE_URL}Syne-Bold.ttf`;
 
 export interface DecadeGroup {
   decade: number;
@@ -127,7 +128,7 @@ export default function TimelineTunnel({ groups, progress, onHover, onSelect, on
             <meshBasicMaterial color="#7B5EA7" transparent opacity={0.4} />
           </mesh>
           <Billboard position={[0, RADIUS + 2, g.z]}>
-            <Text font="/Syne-Bold.ttf" fontSize={1.8} letterSpacing={0.08} color="#C9954C" anchorX="center">
+            <Text font={FONT} fontSize={1.8} letterSpacing={0.08} color="#C9954C" anchorX="center">
               {`${g.decade}s`}
             </Text>
           </Billboard>
