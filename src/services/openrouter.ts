@@ -1,30 +1,20 @@
 import axios from 'axios';
 import type { ChatMessage } from '@/types/ai';
 
-const BASE = import.meta.env.VITE_OPENROUTER_BASE_URL as string;
-const KEY = import.meta.env.VITE_OPENROUTER_API_KEY as string;
-const MODEL = import.meta.env.VITE_OPENROUTER_MODEL as string;
-
-const client = axios.create({
-  baseURL: BASE,
-  headers: {
-    Authorization: `Bearer ${KEY}`,
-    'Content-Type': 'application/json',
-    'HTTP-Referer': 'http://localhost:5173',
-    'X-Title': 'CineAI',
-  },
-});
+// All AI calls go through a serverless proxy that holds the OpenRouter key
+// server-side — the key is never shipped to the browser.
+const PROXY_URL = import.meta.env.VITE_AI_PROXY_URL as string;
 
 interface ChatResponse {
   choices: { message: { content: string } }[];
 }
 
 export async function chat(messages: ChatMessage[], temperature = 0.8): Promise<string> {
-  const { data } = await client.post<ChatResponse>('/chat/completions', {
-    model: MODEL,
-    messages,
-    temperature,
-  });
+  const { data } = await axios.post<ChatResponse>(
+    PROXY_URL,
+    { messages, temperature },
+    { headers: { 'Content-Type': 'application/json' } },
+  );
   return data.choices[0]?.message?.content ?? '';
 }
 

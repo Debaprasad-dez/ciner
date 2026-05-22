@@ -12,3 +12,4 @@ dist-ssr
 openrouter api key - lessdo.txt
 shots/
 *.mjs
+.vercel
